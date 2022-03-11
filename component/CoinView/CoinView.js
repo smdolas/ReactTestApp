@@ -1,68 +1,88 @@
 import React, {useEffect, useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {View, ActivityIndicator, Text} from 'react-native';
-import Coin from './Coin/Coin';
-import Info from './Info/Info';
+
 import axios from 'axios';
 
-const Toptab = createMaterialTopTabNavigator();
+import Coin from './coin/Coin';
+import Info from './info/Info';
+import styles from './CoinViewStyle';
+import ThemeConstants from '../../styles/ThemeConstants';
+import AppURL from '../../utils/AppURL';
 
-// this component will render the both the Coin and Info component in MaterialTopTab navigation
-const Coinview = props => {
-  const {coinid} = props.route.params;
-  const [coindata, setCoindata] = useState({});
+/**
+ * (Coinview) (this component will render the both the Coin and Info component in MaterialTopTab navigation)
+ *  coinId <char> (will have the id of the coin which we want to fetch)
+ *  coinData <Object> (will have the details of the coin for the given coind id)
+ */
 
-  const getcoindata = () => {
-    axios.get('https://api.coingecko.com/api/v3/coins/' + coinid).then(res => {
-      setCoindata({...res.data});
+//TopTab responsible to render navigation top bar
+const TopTab = createMaterialTopTabNavigator();
+
+const CoinView = ({route}) => {
+  const {coinId} = route.params;
+  const [coinData, setCoinData] = useState({});
+
+  /**
+   * Fetches coin details from api
+   */
+  const getCoinData = () => {
+    axios.get(AppURL.FETCH_COIN_ITEM_DETAILS + coinId).then(res => {
+      setCoinData({...res.data});
     });
   };
+
   useEffect(() => {
-    getcoindata();
+    getCoinData();
   }, []);
-  return Object.keys(coindata).length === 0 ? (
+
+  return Object.keys(coinData).length === 0 ? (
     <View>
       <ActivityIndicator />
     </View>
   ) : (
-    <Toptab.Navigator
+    <TopTab.Navigator
       screenOptions={{
-        tabBarLabelStyle: {fontSize: 12},
-        tabBarStyle: {backgroundColor: 'F0F0F0'},
-        tabBarIndicatorStyle: {
-          backgroundColor: '#9ACD32',
-          marginLeft: 42,
-          width: 120,
-          height: 3,
-        },
+        tabBarLabelStyle: {...styles.tabBarLabelStyle},
+        tabBarStyle: {...styles.tabBarStyle},
+        tabBarIndicatorStyle: {...styles.tabBarIndicatorStyle},
       }}>
-      <Toptab.Screen
+      <TopTab.Screen
         name="Coin"
         component={Coin}
         options={{
           title: ({color, focused}) => (
             <Text
               style={{
-                color: focused ? '#9ACD32' : 'grey',
+                color: focused
+                  ? ThemeConstants.FOCUSED_TAB_GREEN
+                  : ThemeConstants.GRAY,
               }}>
               Coin
             </Text>
           ),
         }}
-        initialParams={{...coindata}}
+        initialParams={{...coinData}}
       />
-      <Toptab.Screen
+      <TopTab.Screen
         name="Info"
         component={Info}
-        initialParams={{...coindata}}
+        initialParams={{...coinData}}
         options={{
           title: ({color, focused}) => (
-            <Text style={{color: focused ? '#9ACD32' : 'grey'}}>Info</Text>
+            <Text
+              style={{
+                color: focused
+                  ? ThemeConstants.FOCUSED_TAB_GREEN
+                  : ThemeConstants.GRAY,
+              }}>
+              Info
+            </Text>
           ),
         }}
       />
-    </Toptab.Navigator>
+    </TopTab.Navigator>
   );
 };
 
-export default Coinview;
+export default CoinView;

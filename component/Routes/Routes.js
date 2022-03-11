@@ -1,14 +1,19 @@
 import React from 'react';
+import {View, Image, Text} from 'react-native';
+
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {View, Image, Text} from 'react-native';
-import CoinList from '../CoinList/CoinList';
+
+import CoinList from '../coinList/CoinList';
+import CoinView from '../coinView/CoinView';
+import SplashScreen from '../splashScreen/SplashScreen';
 import Theme from '../../styles/Theme';
-import CoinView from '../CoinView/CoinView';
-import SplashScreen from '../SplashScreen/SplashScreen';
 
 const Stack = createStackNavigator();
 
+/**
+ * This Component will keep the routes of each stack navigation screen
+ **/
 const Routes = () => {
   return (
     <NavigationContainer>
@@ -38,23 +43,21 @@ const Routes = () => {
               <View style={Theme.headerContainer}>
                 <Image
                   style={Theme.headerImage}
-                  source={require('../../assets/Images/icon.png')}
+                  source={require('../../assets/images/icon.png')}
                 />
                 <Text style={Theme.headerTitle}>CoinGecko Market</Text>
               </View>
             ),
           }}
-          name="Coinlist"
+          name="CoinList"
           component={CoinList}
         />
         <Stack.Screen
           options={{
-            headerStyle: {
-              backgroundColor: '#F0F0F0',
-            },
+            headerStyle: {...Theme.headerStyle},
             title: 'Coin Details',
           }}
-          name="Coinview"
+          name="CoinView"
           component={CoinView}
         />
       </Stack.Navigator>

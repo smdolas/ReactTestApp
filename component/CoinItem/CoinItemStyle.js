@@ -1,23 +1,36 @@
 import {StyleSheet} from 'react-native';
+import ThemeConstants from '../../styles/ThemeConstants';
 
-export default CoinitemStyle = StyleSheet.create({
-  coinname: {textAlign: 'left'},
-  coinprice: {textAlign: 'left'},
-  coinimage: {
-    height: 20,
-    width: 20,
+export default styles = StyleSheet.create({
+  coinItemMainContainer: {
+    height: 50,
+    marginTop: 5,
+    backgroundColor: ThemeConstants.WHITE_SMOKE,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  coinsymbol: {
+  coinItemColumn: {
+    backgroundColor: ThemeConstants.TRANSPARENT,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  coinview: {
-    flex: 1,
-    justifyContent: 'space-between',
-    height: 50,
-    flexDirection: 'row',
-    borderWidth: 2,
-    borderColor: 'grey',
-    marginTop: 20,
+  coinItemHorizontalLine: {
+    height: 1,
+    marginTop: 49,
+    backgroundColor: ThemeConstants.BORDER_COLOR,
+    position: 'absolute',
     width: '100%',
+  },
+  coinImage: {
+    width: 15,
+    height: 15,
+  },
+  coinSymbol: {
+    fontSize: ThemeConstants.FONT_SIZE_10,
+    textAlign: 'center',
+  },
+  coinItemTextStyle: {
+    fontSize: ThemeConstants.FONT_SIZE_10,
   },
 });

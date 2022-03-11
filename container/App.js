@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from '../component/Routes/Routes';
+import Routes from '../component/routes/Routes';
 import {View} from 'react-native';
 
 const App = () => {

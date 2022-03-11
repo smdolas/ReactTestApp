@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   appNameStyle: {
-    fontSize: 30,
+    fontSize: ThemeConstants.FONT_SIZE_SPLASHSCREEN_TITLE,
     color: ThemeConstants.FONT_COLOR_GRAY,
     textAlign: 'center',
   },

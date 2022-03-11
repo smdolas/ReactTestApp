@@ -6,23 +6,29 @@ import {
   ScrollView,
   useWindowDimensions,
 } from 'react-native';
-import InfoDetail from '../InfoDetail/InfoDetail';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
 import HTML from 'react-native-render-html';
-import coinViewStyle from '../CoinViewStyle';
 
-//THis component will render the Genesis, homepage and description of the coin
-const Info = props => {
-  const details = {...props.route.params};
+import InfoDetail from '../infoDetail/InfoDetail';
+import styles from './InfoStyle';
+
+/**
+ * This component will render the Genesis, homepage and description of the coin
+ * (details) detail of the coin passed as props in route object
+ **/
+
+const Info = ({route}) => {
+  const details = {...route.params};
   const {width} = useWindowDimensions();
   return Object.keys(details).length === 0 ? (
     <ActivityIndicator />
   ) : (
     <SafeAreaView>
       <ScrollView>
-        <View style={coinViewStyle.container}>
-          <View style={coinViewStyle.topContainer}>
-            <View style={{width: '100%'}}>
+        <View style={styles.container}>
+          <View style={styles.topContainer}>
+            <View style={styles.infoItemContainer}>
               <InfoDetail
                 keyName={'HomePage'}
                 keyValue={
@@ -38,15 +44,15 @@ const Info = props => {
                 keyValueType={'default'}></InfoDetail>
             </View>
           </View>
-          <Text style={coinViewStyle.keyLabel}>Description: </Text>
+          <Text style={styles.keyLabel}>Description: </Text>
           <HTML
             contentWidth={width}
             source={{
               html: details.description.en.replace(/(\r\n|\n|\r)/gm, '<br/>'),
             }}
             tagsStyles={{
-              a: coinViewStyle.linkTagStyle,
-              body: coinViewStyle.bodyStyle,
+              a: styles.linkTagStyle,
+              body: styles.bodyStyle,
             }}
           />
         </View>
